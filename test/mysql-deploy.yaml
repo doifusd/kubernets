@@ -1,0 +1,30 @@
+apiVersion: apps/v1 #api版本
+kind: Deployment #副本控制器
+metadata: 
+  labels: #标签
+    app: mysql8
+  name: mysql8 #对象全局唯一
+spec:
+  replicas: 1 #预期副本数
+  selector:
+    matchLabels:
+      app: mysql8
+  template: #pod模版
+    metadata: 
+      labels:
+        app: mysql8
+    spec:
+      containers: #定义容器
+        - image: mysql:8.0
+          name: kub-mysql
+          ports:
+          - containerPort: 3307
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "123456"
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+apiVersion: apps/v1 #api版本
+kind: Deployment #副本控制器
+metadata: 
+  labels: #标签
+    app: myweb
+  name: myweb #对象全局唯一
+spec:
+  replicas: 1 #预期副本数
+  selector:
+    matchLabels:
+      app: myweb
+  template: #pod模版
+    metadata: 
+      labels:
+        app: myweb
+    spec:
+      containers: #定义容器
+        #- image: golang:1.19.8-buster
+        - image: golang:1.19.8-alpine
+          name: myweb
+          ports:
+          - containerPort: 8080
+          env:
+            - name: MYSQL_SERVICE_HOST
+              value: 127.0.0.1
+

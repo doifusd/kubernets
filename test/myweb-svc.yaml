@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service 
+metadata:
+  name: kub-myweb
+spec:
+  type: NodePort #允许外网访问
+  ports:
+    - port: 3307
+      nodePort: 30001
+  selector:
+    app:
+      kub-myweb
