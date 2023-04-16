@@ -1,0 +1,27 @@
+一个pod里容器与另外主机上的po容器能够直接通信
+pod分为普通和静态
+普通pod从创建后存储到etcd中
+静态pod被存放到某个具体的node的文件上
+event 是一个事件的记录，记录了最早产生时间，最后重现时间，重复次数，发起者，类型
+以及导致的原因
+
+label
+一个label是一个key=value键值对
+label可以放在node，pod，service，deployment上
+
+什么是node
+什么是pod
+什么是service
+什么是deployment
+
+常用的标签
+版本标签：release:stable,release:canary
+环境标签: enviroment:dev，enviroment:qa和enviroment:producation
+架构标签: tier:frontend,tier:backend,tier:middleware
+分区标签: partition:customerA和partition:customerB
+质量管控标签: track:daily和track:weekly
+
+注意:要将应用和service的标签保持一致
+
+使用deployment创建应用，相当于使用pod模板
+

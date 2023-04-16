@@ -1,22 +1,27 @@
 apiVersion: apps/v1 #api版本
-kind: Deployment #副本控制器
+  kind: Deployment #副本控制器
+  #kind: pod #副本控制器
 metadata: 
   labels: #标签
     app: myweb
   name: myweb #对象全局唯一
 spec:
-  replicas: 1 #预期副本数
-  selector:
+  replicas: 1 #pod预期副本数
+  selector:   #目标pod的标签选择器
     matchLabels:
       app: myweb
-  template: #pod模版
+      tier: frontend
+    matchExpressions:
+      - [key: tier,operation: In,values:[frontend]]
+  template: #自动创建pod副本的模版
     metadata: 
       labels:
         app: myweb
+        tier: frontend
     spec:
       containers: #定义容器
-        #- image: golang:1.19.8-buster
         - image: golang:1.19.8-alpine
+          imagePullPolicy: IfNotPresent
           name: myweb
           ports:
           - containerPort: 8080
