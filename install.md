@@ -1,3 +1,22 @@
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl
+
+sudo apt-get install -y apt-transport-https
+
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+阿里源
+curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
+
+sudo cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
+EOF
+
+
+sudo apt-get update
+
 apt install kubeadm kubectl kubelet
 
 关闭交换分区
@@ -123,6 +142,22 @@ imageRepository: registry.aliyuncs.com/google_containers
 
 启动拉取
 sudo kubeadm config images pull --config=init.default.yaml --v=5
+
+
+错误
+rpc error: code = Unimplemented desc = unknown service runtime.v1.ImageService"
+解决:
+sudo mv /etc/containerd/config.toml /root/config.toml.bak
+sudo systemctl restart containerd
+
+错误: 
+the value of KubeletConfiguration.cgroupDriver is empty; setting it to "systemd"
+解决:
+配置文件中增加
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: systemd
 
 
 启动初始化
