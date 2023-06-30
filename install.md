@@ -163,6 +163,22 @@ cgroupDriver: systemd
 启动初始化
 sudo kubeadm init --config=init-default.yaml --v=5
 
+错误
+ERROR FileContent–proc-sys-net-bridge-bridge-nf-call-iptables
+解决
+sudo modprobe br_netfilter
+echo "1" > /proc/sys/net/bridge/bridge-nf-call-iptables
+
+
+错误
+ERROR FileContent--proc-sys-net-ipv4-ip_forward
+解决
+echo "1" > /proc/sys/net/ipv4/ip_forward
+
+
+
+
+
 journalctl -f -u kubelet
 
 
